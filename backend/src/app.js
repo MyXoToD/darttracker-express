@@ -1,11 +1,13 @@
 import dotenv from 'dotenv'
 import express from 'express'
 import db from './config/database.js'
+import baseRoutes from './routes/baseRoutes.js'
 dotenv.config()
 
 const app = express()
 
 app.use(express.json())
+app.use('/api', baseRoutes)
 
 app.get('/users', async (req, res) => {
   const result = await db.query('SELECT * FROM users')
@@ -27,6 +29,5 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(process.env.PORT, () => {
-  // console.log(process.env)
   console.log(`Server is running on http://localhost:${process.env.PORT}`)
 })

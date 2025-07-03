@@ -13,8 +13,10 @@ class AuthController {
       const { username, password } = req.body;
       const user = await this.authService.login(username, password);
       res.status(200).json({ message: 'Login successful', user });
-    } catch (error: any) {
-      res.status(401).json({ message: error.message });
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'An unknown error occurred';
+      res.status(401).json({ message });
     }
   }
 
@@ -23,8 +25,10 @@ class AuthController {
       const userData = req.body;
       const user = await this.authService.register(userData);
       res.status(201).json({ message: 'Registration successful', user });
-    } catch (error: any) {
-      res.status(400).json({ message: error.message });
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'An unknown error occurred';
+      res.status(400).json({ message });
     }
   }
   async logout(req: Request, res: Response) {
@@ -32,8 +36,10 @@ class AuthController {
       const user = req.body;
       await this.authService.logout(user);
       res.status(200).json({ message: 'Logout successful' });
-    } catch (error: any) {
-      res.status(500).json({ message: error.message });
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'An unknown error occurred';
+      res.status(500).json({ message });
     }
   }
 }

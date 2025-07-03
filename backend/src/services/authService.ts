@@ -24,6 +24,7 @@ export class AuthService {
   }
   async logout(user: any) {
     // Implement logout logic, e.g., invalidate session or token
+    console.log(user);
     return true;
   }
 }

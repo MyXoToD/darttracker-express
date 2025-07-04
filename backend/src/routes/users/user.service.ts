@@ -1,35 +1,18 @@
-import db from '../../config/database';
-import { User } from './user.model';
+import { UserEntity } from './models/userEntity.model';
+import userRepository, { UserRepository } from './user.repository';
 
 export class UserService {
-  constructor() {
-    // TODO: Add user repository
+  constructor(private userRepository: UserRepository) {
+    this.userRepository = userRepository;
   }
 
-  async getUsers() {
-    return new Promise((resolve, reject) => {
-      db.query('SELECT * FROM users', (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows);
-        }
-      });
-    });
-  }
+  getUsers = async (): Promise<UserEntity[]> => {
+    return await this.userRepository.findAll();
+  };
 
-  async getUser(id: number) {
-    return new Promise((resolve, reject) => {
-      db.query('SELECT * FROM users WHERE id = ?', [id], (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          const users = result as User[];
-          resolve(users[0]);
-        }
-      });
-    });
-  }
+  getUser = async (userId: number): Promise<UserEntity | null> => {
+    return await this.userRepository.findById(userId);
+  };
 }
 
-export default new UserService();
+export default new UserService(userRepository);

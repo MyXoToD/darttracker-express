@@ -2,18 +2,38 @@ import { Request, Response } from 'express';
 import userService, { UserService } from './user.service';
 
 class UserController {
-  userService: UserService;
-
-  constructor(userService: UserService) {
+  constructor(private userService: UserService) {
     this.userService = userService;
   }
 
   getUsers = async (req: Request, res: Response) => {
-    res.status(200).send(await this.userService.getUsers());
+    try {
+      const users = await this.userService.getUsers();
+      res.send(users);
+    } catch (error) {
+      res
+        .status(500)
+        .send({ error: error, message: 'Failed to get all users' });
+    }
   };
 
   getUser = async (req: Request, res: Response) => {
-    res.send(await this.userService.getUser(+req.params.id));
+    const userId = parseInt(req.params.id);
+
+    try {
+      const user = await this.userService.getUser(userId);
+
+      if (!user) {
+        res.status(404).send({ error: 'Not found', message: 'User not found' });
+      }
+
+      res.send(user);
+    } catch (error) {
+      res.status(500).send({
+        error: error,
+        message: `Failed to fetch user with id ${userId}`,
+      });
+    }
   };
 }
 

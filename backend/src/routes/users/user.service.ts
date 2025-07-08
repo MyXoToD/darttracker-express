@@ -1,18 +1,27 @@
-import { UserEntity } from './models/userEntity.model';
-import userRepository, { UserRepository } from './user.repository';
+import { UserDTO } from './models/userDTO.interface';
+import { UserEntity } from './models/userEntity.interface';
+import { UserMapper } from './user.mapper';
+import { UserRepository } from './user.repository';
 
 export class UserService {
   constructor(private userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
 
-  getUsers = async (): Promise<UserEntity[]> => {
-    return await this.userRepository.findAll();
+  getUsers = async (): Promise<UserDTO[]> => {
+    const userEntities: UserEntity[] = await this.userRepository.findAll();
+    const users: UserDTO[] = userEntities.map((user) => UserMapper.toDTO(user));
+    return users;
   };
 
-  getUser = async (userId: number): Promise<UserEntity | null> => {
-    return await this.userRepository.findById(userId);
+  getUser = async (userId: number): Promise<UserDTO> => {
+    const userEntity: UserEntity | null =
+      await this.userRepository.findById(userId);
+    if (userEntity) {
+      const user = UserMapper.toDTO(userEntity);
+      return user;
+    } else {
+      throw new Error('User not found');
+    }
   };
 }
-
-export default new UserService(userRepository);

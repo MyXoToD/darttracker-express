@@ -1,8 +1,15 @@
 import { Router } from 'express';
-import authController from '../../controllers/authController';
+import { UserRepository } from '../users/user.repository';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
 
 const router = Router();
 
-router.get('/login', authController.login);
+const userRepository = new UserRepository();
+const authService = new AuthService(userRepository);
+const authController = new AuthController(authService);
+
+router.post('/signup', authController.signup);
+router.post('/login', authController.login);
 
 export default router;

@@ -1,10 +1,15 @@
 import { Router } from 'express';
-import userControlller from './user.controller';
+import { UserController } from './user.controller';
+import { UserRepository } from './user.repository';
+import { UserService } from './user.service';
 
 const usersRouter = Router();
 
-usersRouter.get('/', userControlller.getUsers);
+const userRepository = new UserRepository();
+const userService = new UserService(userRepository);
+const userController = new UserController(userService);
 
-usersRouter.get('/:id', userControlller.getUser);
+usersRouter.get('/', userController.getUsers);
+usersRouter.get('/:id', userController.getUser);
 
 export default usersRouter;

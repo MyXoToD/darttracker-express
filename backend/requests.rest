@@ -1,5 +1,28 @@
-GET http://localhost:3000/users
+@apiUrl = http://localhost:3000/api
+
+GET {{apiUrl}}/users
 
 ###
 
-GET http://localhost:3000/users/1
+GET {{apiUrl}}/users/10
+
+###
+
+POST {{apiUrl}}/auth/signup
+Content-Type: application/json
+
+{
+  "username": "John",
+  "email": "john@tester.de",
+  "password": "wick"
+}
+
+###
+
+POST {{apiUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@tester.de",
+  "password": "wick"
+}

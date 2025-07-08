@@ -1,19 +1,20 @@
-import { Request, Response } from 'express';
-import userService, { UserService } from './user.service';
+import { NextFunction, Request, Response } from 'express';
+import { UserService } from './user.service';
 
-class UserController {
+export class UserController {
   constructor(private userService: UserService) {
     this.userService = userService;
   }
 
-  getUsers = async (req: Request, res: Response) => {
+  getUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const users = await this.userService.getUsers();
       res.send(users);
     } catch (error) {
-      res
-        .status(500)
-        .send({ error: error, message: 'Failed to get all users' });
+      next(error);
+      // res
+      //   .status(500)
+      //   .send({ error: error, message: 'Failed to get all users' });
     }
   };
 
@@ -25,9 +26,9 @@ class UserController {
 
       if (!user) {
         res.status(404).send({ error: 'Not found', message: 'User not found' });
+      } else {
+        res.send(user);
       }
-
-      res.send(user);
     } catch (error) {
       res.status(500).send({
         error: error,
@@ -36,5 +37,3 @@ class UserController {
     }
   };
 }
-
-export default new UserController(userService);

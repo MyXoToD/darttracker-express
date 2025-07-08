@@ -1,6 +1,7 @@
 import { RowDataPacket } from 'mysql2';
 import db from '../config/database';
 
+// TODO: Is this needed?
 export interface Repository<T> {
   findAll(): Promise<T[]>;
   findById(id: number): Promise<T | null>;

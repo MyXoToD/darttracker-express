@@ -10,4 +10,4 @@ CREATE TABLE IF NOT EXISTS users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO users (username, password, email) VALUES ('max', 'test', 'test@test.com');
+INSERT INTO users (username, password, email) VALUES ('test', 'test', 'foo@bar.xyz');

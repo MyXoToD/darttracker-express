@@ -1,27 +1,28 @@
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express, { NextFunction, Request, Response } from 'express';
 import appRouter from './routes/app.routes';
 dotenv.config();
 
 const app = express();
+const whitelist = [
+  'http://localhost:4200',
+  'https://ominous-enigma-vrwp6r79xjhw6r6-4200.app.github.dev',
+];
+var corsOptions = {
+  origin: function (origin: any, callback: any) {
+    // !origin to allow requests from rest tools
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
 
 app.use(express.json());
+app.use(cors(corsOptions));
 app.use('/api', appRouter);
-
-/*app.get('/users', async (req: Request, res: Response) => {
-  const result = await db.query('SELECT * FROM users')
-  res.send(result[0])
-})
-
-app.get('/users/:id', async (req: Request, res: Response): Promise<any> => {
-  const { id } = req.params;
-  const [queryresult, result] = await db.query('SELECT * FROM users WHERE id = ?', [id]);
-
-  if (result.length === 0) {
-    return res.status(404).send('User not found');
-  }
-  res.send(result[0]);
-})*/
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);

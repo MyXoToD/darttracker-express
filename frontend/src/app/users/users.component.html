@@ -1,0 +1,9 @@
+<h1>Users</h1>
+
+<ul>
+  @for (user of users; track user.id) {
+  <li>{{ user.username }}</li>
+  } @empty {
+  <li>No users found</li>
+  }
+</ul>

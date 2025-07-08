@@ -6,12 +6,14 @@ dotenv.config();
 
 const app = express();
 const whitelist = [
+  'http://localhost',
+  'http://localhost:8080',
   'http://localhost:4200',
   'https://ominous-enigma-vrwp6r79xjhw6r6-4200.app.github.dev',
 ];
 var corsOptions = {
   origin: function (origin: any, callback: any) {
-    // !origin to allow requests from rest tools
+    // "!origin" to allow requests from rest tools
     if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
@@ -24,9 +26,9 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use('/api', appRouter);
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
-  res.status(500).send('Something broke!');
+  res.status(err.status).json({ error: err.name, message: err.message });
   next();
 });
 

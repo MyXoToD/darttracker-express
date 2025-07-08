@@ -1,7 +1,9 @@
+import dotenv from 'dotenv';
 import { Request } from 'express';
 import { expressjwt as jwt } from 'express-jwt';
+dotenv.config();
 
-const getTokenFromHeaders = (req: Request): string | null => {
+const getTokenFromHeaders = (req: Request) => {
   if (
     (req.headers.authorization &&
       req.headers.authorization.split(' ')[0] === 'Token') ||
@@ -10,17 +12,17 @@ const getTokenFromHeaders = (req: Request): string | null => {
   ) {
     return req.headers.authorization.split(' ')[1];
   }
-  return null;
+  return undefined;
 };
 
 const auth = {
   required: jwt({
-    secret: process.env.JWT_SECRET || 'superSecret',
+    secret: process.env.ACCESS_TOKEN_SECRET as string,
     getToken: getTokenFromHeaders,
     algorithms: ['HS256'],
   }),
   optional: jwt({
-    secret: process.env.JWT_SECRET || 'superSecret',
+    secret: process.env.ACCESS_TOKEN_SECRET as string,
     credentialsRequired: false,
     getToken: getTokenFromHeaders,
     algorithms: ['HS256'],

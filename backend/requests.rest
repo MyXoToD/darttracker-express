@@ -1,10 +1,16 @@
 @apiUrl = http://localhost:3000/api
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzUyMDA0MTA2LCJleHAiOjE3NTIwMDc3MDZ9.CnczmiNCtfI6fpvs8I3WusJ8YW3IFIl-h70xKZVNlt0
 
-GET {{apiUrl}}/users
+GET {{apiUrl}}
 
 ###
 
-GET {{apiUrl}}/users/10
+GET {{apiUrl}}/users
+Authorization: {{token}}
+
+###
+
+GET {{apiUrl}}/users/1
 
 ###
 

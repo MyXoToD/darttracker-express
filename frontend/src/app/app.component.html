@@ -1,4 +1,25 @@
-<a [routerLink]="'auth/signup'">Signup</a>
-<a [routerLink]="'users'">Users</a>
+<aside class="sidebar">
+  <h1>Darttracker</h1>
 
-<router-outlet />
+  <nav class="navigation">
+    <ul>
+      <li class="navigation__headline">You</li>
+      <li>
+        <a routerLink="/auth/login">Login</a>
+        <a routerLink="/auth/signup">Signup</a>
+        <a [routerLink]="">Profile</a>
+      </li>
+
+      <li class="navigation__headline">Dart</li>
+      <li><a routerLink="users">Players</a></li>
+      <li><a [routerLink]="">Games</a></li>
+      <li><a [routerLink]="">Statistics</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<main class="main">
+  <div class="content">
+    <router-outlet />
+  </div>
+</main>

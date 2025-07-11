@@ -19,10 +19,33 @@ export class AuthController {
   login = async (req: Request, res: Response) => {
     try {
       const loginDTO: LoginDTO = req.body;
-      const token = await this.authService.login(loginDTO);
-      res.status(200).send(token);
+      const tokens = await this.authService.login(loginDTO);
+
+      res.cookie('refreshToken', tokens.refreshToken, {
+        httpOnly: true,
+        secure: false, // set to true if using HTTPS (TODO)
+        sameSite: 'strict', // prevent CSRF attacks
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days TODO: Same as refresh token expiration
+      });
+
+      res.status(200).send({ token: tokens.accessToken });
     } catch (error: any) {
       res.status(401).send({ error: error.message });
+    }
+  };
+
+  refresh = async (req: Request, res: Response) => {
+    try {
+      const refreshToken = req.cookies.refreshToken;
+
+      if (refreshToken) {
+        const accessToken = this.authService.refresh(refreshToken);
+        res.status(200).send('REFRESH NOT IMPLEMENTED');
+      } else {
+        throw new Error('No refresh token provided');
+      }
+    } catch (error: any) {
+      res.status(400).send({ error: error.message });
     }
   };
 }

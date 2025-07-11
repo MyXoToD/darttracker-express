@@ -2,7 +2,7 @@
 
 <ul>
   @for (user of users; track user.id) {
-  <li>{{ user.username }}</li>
+  <li>{{ user.username }} ({{ user.email }})</li>
   } @empty {
   <li>No users found</li>
   }

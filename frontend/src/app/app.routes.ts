@@ -12,4 +12,10 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./users/users.routes').then((r) => r.USERS_ROUTES),
   },
+  {
+    path: 'games',
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('./games/games.routes').then((r) => r.GAMES_ROUTES),
+  },
 ];

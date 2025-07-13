@@ -1,5 +1,5 @@
 @apiUrl = http://localhost:3000/api
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzUyMDA0MTA2LCJleHAiOjE3NTIwMDc3MDZ9.CnczmiNCtfI6fpvs8I3WusJ8YW3IFIl-h70xKZVNlt0
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzUyNDM1ODgxLCJleHAiOjE3NTI0MzY0ODF9.QOneiVlPx48JEdIofvwjhnyUYWc31iBy8vk1i_ikfGw
 
 GET {{apiUrl}}
 
@@ -18,9 +18,9 @@ POST {{apiUrl}}/auth/signup
 Content-Type: application/json
 
 {
-  "username": "John",
-  "email": "john@tester.de",
-  "password": "wick"
+  "username": "max",
+  "email": "max@test.de",
+  "password": "test"
 }
 
 ###
@@ -29,10 +29,15 @@ POST {{apiUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "john@tester.de",
-  "password": "wick"
+  "email": "max@test.de",
+  "password": "test"
 }
 
 ###
 
 POST {{apiUrl}}/auth/refresh
+
+###
+
+GET {{apiUrl}}/games
+Authorization: {{token}}

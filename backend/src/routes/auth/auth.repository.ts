@@ -15,4 +15,14 @@ export class AuthRepository extends BaseRepository<SessionEntity> {
     );
     return rows[0] ?? null;
   }
+
+  async findByRefreshTokenAndRefreshTokenNotExpired(
+    refreshToken: string,
+  ): Promise<SessionEntity | null> {
+    const [rows] = await db.query<SessionEntity[]>(
+      `SELECT * FROM ${this.tableName} WHERE refresh_token = ? AND expires_at > NOW()`,
+      [refreshToken],
+    );
+    return rows[0] ?? null;
+  }
 }

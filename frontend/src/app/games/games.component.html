@@ -1,0 +1,7 @@
+<h1>Games</h1>
+
+<ul>
+  @for (game of games; track game.id) {
+  <li>{{ game.title }} ({{ game.players.length }})</li>
+  }
+</ul>

@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
+import { Request } from 'express';
 import { comparePassword, hashPassword } from '../../utils/hash';
 import {
-  decodeToken,
   generateAccessToken,
   generateRefreshToken,
   getExpirationDate,
@@ -37,7 +37,7 @@ export class AuthService {
     return UserMapper.toDTO(user);
   };
 
-  login = async (loginDTO: LoginDTO) => {
+  login = async (loginDTO: LoginDTO, req: Request) => {
     const user = await this.userRepository.findByEmail(loginDTO.email);
     if (!user || !(await comparePassword(loginDTO.password, user.password))) {
       throw new Error('Invalid credentials');
@@ -45,12 +45,14 @@ export class AuthService {
 
     const accessToken = generateAccessToken({ id: user.id });
     const refreshToken = generateRefreshToken({ id: user.id });
+    const ipAddress = req.headers['x-forwarded-for'] || req.ip;
+    const userAgent = req.headers['user-agent'];
 
     const sessionEntity = {
       user_id: user.id,
       refresh_token: refreshToken,
-      ip_address: 'NOT IMPLEMENTED',
-      user_agent: 'NOT IMPLEMENTED',
+      ip_address: ipAddress,
+      user_agent: userAgent,
       expires_at: getExpirationDate(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET!,
@@ -62,20 +64,37 @@ export class AuthService {
     return { accessToken, refreshToken };
   };
 
-  refresh = async (refreshToken: string) => {
-    const decoded = decodeToken(
-      refreshToken,
-      process.env.REFRESH_TOKEN_SECRET!,
-    ) as { id: number };
-
+  refresh = async (refreshToken: string, req: Request) => {
     // Check if refreshtoken still valid
+    // Check if user has active session with same refresh token
+    const session =
+      await this.authRepository.findByRefreshTokenAndRefreshTokenNotExpired(
+        refreshToken,
+      );
 
-    if (decoded) {
-      this.authRepository.findByUserIdAndRefreshToken(decoded.id, refreshToken);
-      // TODO: Check if user has active session with same user id and refresh token
-      // Update session in database with new refresh token and set updated at
-      // Return new tokens
-      return 'NOT IMPLEMENTED';
+    if (!session) {
+      throw new Error('Could not refresh session, no active session found');
     }
+
+    const newAccessToken = generateAccessToken({ id: session.user_id });
+    const newRefreshToken = generateRefreshToken({ id: session.user_id });
+    const ipAddress = req.headers['x-forwarded-for'] || req.ip;
+    const userAgent = req.headers['user-agent'];
+
+    let updatedSessionEntity = {
+      refresh_token: newRefreshToken,
+      ip_address: ipAddress,
+      user_agent: userAgent,
+      expires_at: getExpirationDate(
+        newRefreshToken,
+        process.env.REFRESH_TOKEN_SECRET!,
+      ),
+    } as Partial<SessionEntity>;
+
+    // Update session in database with new refresh token and set updated at
+    this.authRepository.update(session.id, updatedSessionEntity);
+
+    // Return new tokens
+    return { accessToken: newAccessToken, refreshToken: newRefreshToken };
   };
 }

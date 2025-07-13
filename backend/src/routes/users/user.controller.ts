@@ -7,8 +7,6 @@ export class UserController {
   }
 
   getUsers = async (req: Request, res: Response, next: NextFunction) => {
-    console.log('cookies', req.cookies.refreshToken);
-    console.log('signedCookies', req.signedCookies);
     try {
       const users = await this.userService.getUsers();
       res.send(users);

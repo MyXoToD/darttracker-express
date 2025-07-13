@@ -19,7 +19,7 @@ export class AuthController {
   login = async (req: Request, res: Response) => {
     try {
       const loginDTO: LoginDTO = req.body;
-      const tokens = await this.authService.login(loginDTO);
+      const tokens = await this.authService.login(loginDTO, req);
 
       res.cookie('refreshToken', tokens.refreshToken, {
         httpOnly: true,
@@ -39,8 +39,16 @@ export class AuthController {
       const refreshToken = req.cookies.refreshToken;
 
       if (refreshToken) {
-        const accessToken = this.authService.refresh(refreshToken);
-        res.status(200).send('REFRESH NOT IMPLEMENTED');
+        const tokens = await this.authService.refresh(refreshToken, req);
+
+        res.cookie('refreshToken', tokens.refreshToken, {
+          httpOnly: true,
+          secure: false, // set to true if using HTTPS (TODO)
+          sameSite: 'strict', // prevent CSRF attacks
+          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days TODO: Same as refresh token expiration
+        });
+
+        res.status(200).send({ token: tokens.accessToken });
       } else {
         throw new Error('No refresh token provided');
       }

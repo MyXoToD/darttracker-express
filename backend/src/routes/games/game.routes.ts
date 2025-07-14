@@ -10,6 +10,7 @@ const gameService = new GameService(gameRepository);
 const gameController = new GameController(gameService);
 
 gamesRouter.get('/', gameController.getGames);
+gamesRouter.get('/upcoming', gameController.getUpcomingGames);
 // gamesRouter.get('/:id', gameController.getGame);
 
 export default gamesRouter;

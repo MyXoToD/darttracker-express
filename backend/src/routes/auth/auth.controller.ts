@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { LoginDTO } from './models/loginDTO.interface';
 import { SignUpDTO } from './models/signUpDTO.interface';
@@ -54,6 +54,24 @@ export class AuthController {
       }
     } catch (error: any) {
       res.status(400).send({ error: error.message });
+    }
+  };
+
+  logout = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const refreshToken = req.cookies.refreshToken;
+
+      await this.authService.logout(refreshToken);
+
+      res.clearCookie('refreshToken', {
+        httpOnly: true,
+        secure: false, // TODO: Set secure
+        sameSite: 'strict',
+      });
+
+      res.send({ logout: true });
+    } catch (error) {
+      next(error);
     }
   };
 }

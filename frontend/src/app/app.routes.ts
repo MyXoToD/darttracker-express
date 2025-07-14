@@ -18,4 +18,12 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./games/games.routes').then((r) => r.GAMES_ROUTES),
   },
+  {
+    path: 'dashboard',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./dashboard/dashboard.component').then(
+        (c) => c.DashboardComponent
+      ),
+  },
 ];

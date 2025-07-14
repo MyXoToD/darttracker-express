@@ -1,9 +1,16 @@
-<h1>Signup</h1>
+<div class="card">
+  <div class="card__title">Signup</div>
+  <div class="card__content">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <input type="text" placeholder="Username" formControlName="username" />
+      <input type="text" placeholder="E-Mail" formControlName="email" />
+      <input
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+      />
 
-<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-  <input type="text" placeholder="Username" formControlName="username" />
-  <input type="text" placeholder="E-Mail" formControlName="email" />
-  <input type="password" placeholder="Password" formControlName="password" />
-
-  <button type="submit" [disabled]="!signupForm.valid">Sign up</button>
-</form>
+      <button type="submit" [disabled]="!signupForm.valid">Sign up</button>
+    </form>
+  </div>
+</div>

@@ -3,17 +3,34 @@
 
   <nav class="navigation">
     <ul>
+      <li class="navigation__headline">Welcome</li>
+      <li>
+        <a routerLink="auth/login">Login</a>
+        <a routerLink="auth/signup">Signup</a>
+      </li>
       <li class="navigation__headline">You</li>
       <li>
-        <a routerLink="/auth/login">Login</a>
-        <a routerLink="/auth/signup">Signup</a>
-        <a [routerLink]="">Profile</a>
+        <a routerLink="dashboard">Dashboard</a>
+        <a routerLink="profile">Profile</a>
       </li>
 
       <li class="navigation__headline">Dart</li>
-      <li><a routerLink="users">Players</a></li>
-      <li><a routerLink="games">Games</a></li>
-      <li><a [routerLink]="">Statistics</a></li>
+      <li>
+        <a routerLink="users">Players</a>
+        <a routerLink="games">Games</a>
+        <a routerLink="">Statistics</a>
+      </li>
+    </ul>
+  </nav>
+
+  <nav class="navigation navigation--bottom">
+    <ul>
+      <li>
+        <a href="/settings">Settings</a>
+      </li>
+      <li>
+        <a (click)="logout()">Logout</a>
+      </li>
     </ul>
   </nav>
 </aside>

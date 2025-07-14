@@ -18,6 +18,15 @@ export class GameController {
     }
   };
 
+  getUpcomingGames = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const games = await this.gameService.getUpcomingGames();
+      res.send(games);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   // getGame = async (req: Request, res: Response) => {
   //   const gameId = parseInt(req.params.id);
 

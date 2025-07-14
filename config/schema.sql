@@ -54,6 +54,8 @@ INSERT INTO users (username, password, email) VALUES ('moxy', 'test123', 'moxy@t
 INSERT INTO games (title, description, played_at, winner_id, win_type) VALUES ('First game', 'Lorem Ipsum Dolor Sit Amet', '2025-01-01 10:00:00.000', 1, 'First Class');
 INSERT INTO games (title, description, played_at, winner_id, win_type) VALUES ('Second game', 'Lorem Ipsum Dolor Sit Amet', '2025-02-01 13:00:00.000', 2, 'Second Class');
 INSERT INTO games (title, description, played_at) VALUES ('Third game', 'Lorem Ipsum Dolor Sit Amet', '2025-03-01 10:00:00.000');
+INSERT INTO games (title, description, played_at) VALUES ('Future game', 'Future Game Description', '2025-08-30 15:00:00.000');
+INSERT INTO games (title, description, played_at) VALUES ('Future game 2', 'Future Game Description', '2025-08-31 13:00:00.000');
 
 INSERT INTO users_games (user_id, game_id) VALUES (1, 1);
 INSERT INTO users_games (user_id, game_id) VALUES (2, 1);

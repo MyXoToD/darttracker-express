@@ -43,7 +43,13 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('accessToken');
+    return this.apiService.post('/auth/logout').pipe(
+      tap(() => {
+        localStorage.removeItem('accessToken');
+        this.isLoggedIn = false;
+        this.router.navigate(['auth', 'login']);
+      })
+    );
   }
 
   isAuthenticated(): boolean {

@@ -84,4 +84,8 @@ export class AuthService {
     // Return new tokens
     return { accessToken: newAccessToken, refreshToken: newRefreshToken };
   };
+
+  logout = async (refreshToken: string) => {
+    await this.authRepository.deleteByRefreshToken(refreshToken);
+  };
 }

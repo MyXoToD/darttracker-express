@@ -1,14 +1,14 @@
 import { GameMapper } from './game.mapper';
 import { GameRepository } from './game.repository';
+import { GameDTO } from './models/gameDTO.interface';
 
 export class GameService {
   constructor(private gameRepository: GameRepository) {
     this.gameRepository = gameRepository;
   }
 
-  getGames = async (): Promise<any[]> => {
-    const rawGames =
-      (await this.gameRepository.findAllWithPlayersAndWinner()) as Array<any>;
+  getGames = async (): Promise<GameDTO[]> => {
+    const rawGames = (await this.gameRepository.findAllWithPlayersAndWinner()) as Array<any>;
 
     const gamesMap = new Map<number, any>();
     rawGames.forEach((row) => {
@@ -35,9 +35,17 @@ export class GameService {
       }
     });
 
-    return Array.from(gamesMap.values()).map((game) =>
-      GameMapper.toGameDTO(game, game.players, game.winner),
-    );
+    return Array.from(gamesMap.values()).map((game) => GameMapper.toGameDTO(game, game.players, game.winner));
+  };
+
+  getUpcomingGames = async (): Promise<GameDTO[]> => {
+    const allGames = await this.getGames();
+
+    const todayMidnight = new Date();
+    todayMidnight.setHours(0, 0, 0, 0);
+    const upcomingGames = allGames.filter((game) => game.played_at >= todayMidnight);
+
+    return upcomingGames;
   };
 
   // getGame = async (gameId: number): Promise<GameDTO> => {

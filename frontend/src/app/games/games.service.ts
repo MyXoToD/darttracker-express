@@ -4,8 +4,13 @@ import { ApiService } from '../api/api.service';
 @Injectable({ providedIn: 'root' })
 export class GamesService {
   private readonly apiService = inject(ApiService);
+  private readonly endpoint = '/games';
 
   getAll() {
-    return this.apiService.get('/games');
+    return this.apiService.get(this.endpoint);
+  }
+
+  getUpcoming() {
+    return this.apiService.get(`${this.endpoint}/upcoming`);
   }
 }

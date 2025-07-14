@@ -1,5 +1,5 @@
 @apiUrl = http://localhost:3000/api
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzUyNDM1ODgxLCJleHAiOjE3NTI0MzY0ODF9.QOneiVlPx48JEdIofvwjhnyUYWc31iBy8vk1i_ikfGw
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzUyNTI1NTkxLCJleHAiOjE3NTI1MjYxOTF9.B5wbWhqAc_TuZmEdEf1tlVquoa8bqEBz7gIIfX5IC00
 
 GET {{apiUrl}}
 
@@ -41,3 +41,12 @@ POST {{apiUrl}}/auth/refresh
 
 GET {{apiUrl}}/games
 Authorization: {{token}}
+
+###
+
+GET {{apiUrl}}/games/upcoming
+Authorization: {{token}}
+
+###
+
+POST {{apiUrl}}/auth/logout

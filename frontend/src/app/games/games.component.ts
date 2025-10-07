@@ -26,7 +26,10 @@ export class GamesComponent {
     // Debug
     this.gamesService
       .getAll()
-      .pipe(tap((result) => (this.games = result as any[])))
+      .pipe(tap((result) => (this.games = result as GamesWithPlayers[])))
       .subscribe();
+
+    // Debug 2
+    // this.gamesService.getById(6).subscribe((result) => console.log(result));
   }
 }

@@ -13,4 +13,8 @@ export class GamesService {
   getUpcoming() {
     return this.apiService.get(`${this.endpoint}/upcoming`);
   }
+
+  getById(id: number) {
+    return this.apiService.get(`${this.endpoint}/${id}`);
+  }
 }

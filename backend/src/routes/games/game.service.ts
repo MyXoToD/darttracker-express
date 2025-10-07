@@ -1,6 +1,7 @@
 import { GameMapper } from './game.mapper';
 import { GameRepository } from './game.repository';
 import { GameDTO } from './models/gameDTO.interface';
+import { GameEntity } from './models/gameEntity.interface';
 
 export class GameService {
   constructor(private gameRepository: GameRepository) {
@@ -8,7 +9,8 @@ export class GameService {
   }
 
   getGames = async (): Promise<GameDTO[]> => {
-    const rawGames = (await this.gameRepository.findAllWithPlayersAndWinner()) as Array<any>;
+    const rawGames =
+      (await this.gameRepository.findAllWithPlayersAndWinner()) as Array<any>;
 
     const gamesMap = new Map<number, any>();
     rawGames.forEach((row) => {
@@ -35,7 +37,9 @@ export class GameService {
       }
     });
 
-    return Array.from(gamesMap.values()).map((game) => GameMapper.toGameDTO(game, game.players, game.winner));
+    return Array.from(gamesMap.values()).map((game) =>
+      GameMapper.toGameDTO(game, game.players, game.winner),
+    );
   };
 
   getUpcomingGames = async (): Promise<GameDTO[]> => {
@@ -43,19 +47,25 @@ export class GameService {
 
     const todayMidnight = new Date();
     todayMidnight.setHours(0, 0, 0, 0);
-    const upcomingGames = allGames.filter((game) => game.played_at >= todayMidnight);
+    const upcomingGames = allGames.filter(
+      (game) => game.played_at >= todayMidnight,
+    );
 
     return upcomingGames;
   };
 
-  // getGame = async (gameId: number): Promise<GameDTO> => {
-  //   const gameEntity: GameEntity | null =
-  //     await this.gameRepository.findById(gameId);
-  //   if (gameEntity) {
-  //     const game = GameMapper.toDTO(gameEntity);
-  //     return game;
-  //   } else {
-  //     throw new Error('Game not found');
-  //   }
-  // };
+  getGame = async (gameId: number): Promise<GameDTO> => {
+    const gameEntity: GameEntity | null =
+      await this.gameRepository.findById(gameId);
+    if (gameEntity) {
+      const game = GameMapper.toGameDTO(
+        gameEntity,
+        gameEntity.players,
+        gameEntity.winner,
+      );
+      return game;
+    } else {
+      throw new Error('Game not found');
+    }
+  };
 }

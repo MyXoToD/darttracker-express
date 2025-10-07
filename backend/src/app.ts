@@ -31,7 +31,9 @@ app.use('/api', appRouter);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
-  res.status(err.status).json({ error: err.name, message: err.message });
+  // TODO: Add custom error object
+  // res.status(err.status).json({ error: err.name, message: err.message });
+  res.json({ error: err.name, messgae: err.message });
   next();
 });
 

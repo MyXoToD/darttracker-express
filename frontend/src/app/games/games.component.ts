@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { tap } from 'rxjs';
 import { GamesService } from './games.service';
@@ -5,7 +6,7 @@ import { GamesWithPlayers } from './models/gamesWithPlayers.interface';
 
 @Component({
   selector: 'app-games',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './games.component.html',
   styleUrl: './games.component.scss',
 })
@@ -19,7 +20,7 @@ export class GamesComponent {
     this.gamesService
       .getUpcoming()
       .subscribe(
-        (result) => (this.upcomingGames = result as GamesWithPlayers[])
+        (result) => (this.upcomingGames = result as GamesWithPlayers[]),
       );
 
     // Debug

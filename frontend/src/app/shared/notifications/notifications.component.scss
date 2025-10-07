@@ -1,0 +1,29 @@
+.notifications {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .notification {
+    padding: 1rem;
+    border-radius: 0.5rem;
+
+    &--success {
+      background-color: hsla(125, 100%, 71%, 0.712);
+    }
+
+    &--info {
+      background-color: hsla(216, 100%, 71%, 0.712);
+    }
+
+    &--warning {
+      background-color: hsla(61, 100%, 71%, 0.712);
+    }
+
+    &--error {
+      background-color: hsla(0, 100%, 71%, 0.712);
+    }
+  }
+}

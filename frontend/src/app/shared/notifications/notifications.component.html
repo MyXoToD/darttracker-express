@@ -1,0 +1,15 @@
+@if (notifications().length) {
+  <div class="notifications">
+    <ng-container
+      *ngFor="let notification of notifications(); track notification"
+      [ngTemplateOutlet]="notificationBox"
+      [ngTemplateOutletContext]="{ notification: notification }"
+    ></ng-container>
+  </div>
+}
+
+<ng-template #notificationBox let-notification="notification">
+  <div class="notification notification--{{ notification.type }}">
+    {{ notification.message }}
+  </div>
+</ng-template>

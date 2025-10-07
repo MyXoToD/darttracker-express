@@ -3,11 +3,13 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { tap } from 'rxjs';
 import { ApiService } from '../api/api.service';
+import { NotificationsService } from '../shared/notifications/services/notifications.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly apiService = inject(ApiService);
   private readonly router = inject(Router);
+  private readonly _notificationsService = inject(NotificationsService);
 
   isLoggedIn: boolean = false;
 
@@ -25,8 +27,11 @@ export class AuthService {
             localStorage.setItem('accessToken', token);
             this.isLoggedIn = true;
             this.router.navigate(['/users']);
+            this._notificationsService.addSuccessNotification(
+              'You have logged in successfully.',
+            );
           }
-        })
+        }),
       );
   }
 
@@ -38,7 +43,7 @@ export class AuthService {
           localStorage.setItem('accessToken', token);
           this.isLoggedIn = true;
         }
-      })
+      }),
     );
   }
 
@@ -48,7 +53,10 @@ export class AuthService {
         localStorage.removeItem('accessToken');
         this.isLoggedIn = false;
         this.router.navigate(['auth', 'login']);
-      })
+        this._notificationsService.addSuccessNotification(
+          'You have logged out successfully.',
+        );
+      }),
     );
   }
 

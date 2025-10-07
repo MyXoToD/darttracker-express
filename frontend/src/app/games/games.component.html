@@ -2,20 +2,30 @@
   <div class="card__title">Upcoming Games</div>
   <div class="card__content">
     @for (game of upcomingGames; track game.id) {
-    <p>{{ game.title }}</p>
+      <p>{{ game.title }}</p>
     } @empty {
-    <p>No upcoming games</p>
+      <p>No upcoming games</p>
     }
   </div>
 </div>
 
-<div class="card">
-  <div class="card__title">Past Games</div>
-  <div class="card__content">
-    <ul>
-      @for (game of games; track game.id) {
-      <li>{{ game.title }} ({{ game.players.length }})</li>
-      }
-    </ul>
-  </div>
-</div>
+<table class="datatable">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Date</th>
+      <th># of Players</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (game of games; track game) {
+      <tr>
+        <td>{{ game.id }}</td>
+        <td>{{ game.title }}</td>
+        <td>{{ game.played_at | date: 'fullDate' }}</td>
+        <td>{{ game.players.length }}</td>
+      </tr>
+    }
+  </tbody>
+</table>

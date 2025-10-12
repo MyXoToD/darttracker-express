@@ -18,22 +18,15 @@ export class UserController {
     }
   };
 
-  getUser = async (req: Request, res: Response) => {
+  getUser = async (req: Request, res: Response, next: NextFunction) => {
     const userId = parseInt(req.params.id);
 
     try {
       const user = await this.userService.getUser(userId);
 
-      if (!user) {
-        res.status(404).send({ error: 'Not found', message: 'User not found' });
-      } else {
-        res.send(user);
-      }
+      res.send(user);
     } catch (error) {
-      res.status(500).send({
-        error: error,
-        message: `Failed to fetch user with id ${userId}`,
-      });
+      next(error);
     }
   };
 }

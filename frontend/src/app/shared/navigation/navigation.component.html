@@ -1,0 +1,31 @@
+<nav class="navigation">
+  <ul class="navigation__top">
+    @if (isLoggedIn()) {
+      <li class="navigation__headline">You</li>
+      <li>
+        <a routerLink="dashboard">Dashboard</a>
+        <a routerLink="profile">Profile</a>
+      </li>
+
+      <li class="navigation__headline">Dart</li>
+      <li>
+        <a routerLink="users">Players</a>
+        <a routerLink="games">Games</a>
+        <a routerLink="">Statistics</a>
+      </li>
+    } @else {
+      <li class="navigation__headline">Welcome</li>
+      <li>
+        <a routerLink="auth/login">Login</a>
+        <a routerLink="auth/signup">Signup</a>
+      </li>
+    }
+  </ul>
+
+  <ul *ngIf="isLoggedIn()" class="navigation__bottom">
+    <li>
+      <a href="/settings">Settings</a>
+      <a (click)="logout()">Logout</a>
+    </li>
+  </ul>
+</nav>

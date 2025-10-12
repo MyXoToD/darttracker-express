@@ -1,0 +1,40 @@
+:host {
+  display: contents;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  grid-area: topbar;
+  width: 100%;
+  background-color: var(--c-elevation-1);
+  background-color: #22202b;
+  height: var(--topbarHeight);
+  display: grid;
+  grid-template-areas: 'topbarLeft topbarRight';
+
+  &__left {
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 1.125rem;
+    grid-area: topbarLeft;
+  }
+
+  &__right {
+    margin-left: auto;
+    grid-area: topbarRight;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    img {
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+      margin: 0 1rem;
+    }
+  }
+}

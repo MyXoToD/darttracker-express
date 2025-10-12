@@ -1,8 +1,9 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
 import appRouter from './routes/app.routes';
+import { errorHandler } from './shared/error-handler/error-handler.middleware';
 dotenv.config();
 
 const app = express();
@@ -28,14 +29,15 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use('/api', appRouter);
+app.use(errorHandler);
 
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  // TODO: Add custom error object
-  // res.status(err.status).json({ error: err.name, message: err.message });
-  res.json({ error: err.name, messgae: err.message });
-  next();
-});
+// app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+//   console.error(err.stack);
+//   // TODO: Add custom error object
+//   // res.status(err.status).json({ error: err.name, message: err.message });
+//   res.json({ error: err.name, messgae: err.message });
+//   next();
+// });
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on http://localhost:${process.env.PORT}`);

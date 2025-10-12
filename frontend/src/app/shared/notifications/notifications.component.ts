@@ -7,6 +7,7 @@ import { NotificationsService } from './services/notifications.service';
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.scss',
   imports: [NgTemplateOutlet, NgFor],
+  standalone: true,
 })
 export class NotificationsComponent {
   private readonly _notificationsService = inject(NotificationsService);

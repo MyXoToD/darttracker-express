@@ -1,3 +1,4 @@
+import { CustomError } from '../../shared/error-handler/custom-error.class';
 import { UserDTO } from './models/userDTO.interface';
 import { UserEntity } from './models/userEntity.interface';
 import { UserMapper } from './user.mapper';
@@ -21,7 +22,7 @@ export class UserService {
       const user = UserMapper.toDTO(userEntity);
       return user;
     } else {
-      throw new Error('User not found');
+      throw new CustomError(`Could not find user with id '${userId}'.`, 404);
     }
   };
 }

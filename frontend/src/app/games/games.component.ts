@@ -1,12 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { tap } from 'rxjs';
 import { GamesService } from './games.service';
 import { GamesWithPlayers } from './models/gamesWithPlayers.interface';
 
 @Component({
   selector: 'app-games',
-  imports: [DatePipe],
+  imports: [DatePipe, RouterLink],
   templateUrl: './games.component.html',
   styleUrl: './games.component.scss',
 })

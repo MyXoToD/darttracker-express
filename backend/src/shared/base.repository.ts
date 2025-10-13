@@ -1,4 +1,4 @@
-import { RowDataPacket } from 'mysql2';
+import { ResultSetHeader, RowDataPacket } from 'mysql2';
 import db from '../config/database';
 
 // TODO: Is this needed?
@@ -27,9 +27,10 @@ export abstract class BaseRepository<T extends RowDataPacket> {
   }
 
   async create(data: Partial<T>): Promise<T> {
-    const [result] = await db.query(`INSERT INTO ${this.tableName} SET ?`, [
-      data,
-    ]);
+    const [result] = await db.query<ResultSetHeader>(
+      `INSERT INTO ${this.tableName} SET ?`,
+      [data],
+    );
     const insertId = (result as any).insertId;
     return this.findById(insertId) as Promise<T>;
   }

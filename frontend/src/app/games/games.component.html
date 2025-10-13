@@ -20,7 +20,7 @@
   </thead>
   <tbody>
     @for (game of games; track game) {
-      <tr>
+      <tr [routerLink]="[game.id]">
         <td>{{ game.id }}</td>
         <td>{{ game.title }}</td>
         <td>{{ game.played_at | date: 'fullDate' }}</td>

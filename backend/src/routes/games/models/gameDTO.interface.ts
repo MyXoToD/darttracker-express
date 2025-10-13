@@ -6,9 +6,9 @@ export interface GameDTO {
   title: string;
   description: string;
   played_at: Date;
-  win_type: WinType;
+  win_type: WinType | null;
   created_at: Date;
   updated_at: Date;
-  winner: UserDTO | null;
-  players: UserDTO[];
+  winner: Partial<UserDTO> | null;
+  players: Partial<UserDTO>[];
 }

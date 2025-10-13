@@ -1,0 +1,37 @@
+@if (game) {
+  <div class="match-card">
+    <div class="match-card__header">
+      <h2>{{ game.title }}, 13.10.2025</h2>
+      <button>Join</button>
+    </div>
+    <div class="match-card__content">
+      <div class="tags">
+        <div class="tag">Montag, 13.10.2025</div>
+        <div class="tag">{{ game.players.length }} Players</div>
+        <div class="tag">301 Elemination</div>
+      </div>
+
+      @if (game.players.length > 8) {
+        <div class="warning">
+          <fa-icon icon="warning" />
+          <span
+            >Aufgrund zu vieler Anmeldungen muss heute ausgeworfen werden. (1
+            Spieler muss ausscheiden)</span
+          >
+        </div>
+      }
+
+      <div class="match-participants">
+        @for (player of game.players; track player) {
+          <div class="match-participant" [routerLink]="['/users', player.id]">
+            <img src="//placehold.co/32x32" alt="" /><span>{{
+              player.username
+            }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+} @else {
+  <p>Loading...</p>
+}

@@ -1,7 +1,6 @@
-import { GameMapper } from './game.mapper';
+import { GameMapper, GameWithRelationsRow } from './game.mapper';
 import { GameRepository } from './game.repository';
 import { GameDTO } from './models/gameDTO.interface';
-import { GameEntity } from './models/gameEntity.interface';
 
 export class GameService {
   constructor(private gameRepository: GameRepository) {
@@ -9,41 +8,15 @@ export class GameService {
   }
 
   getGames = async (): Promise<GameDTO[]> => {
-    const rawGames =
-      (await this.gameRepository.findAllWithPlayersAndWinner()) as Array<any>;
+    const rows: GameWithRelationsRow[] =
+      await this.gameRepository.findAllWithPlayersAndWinner();
 
-    const gamesMap = new Map<number, any>();
-    rawGames.forEach((row) => {
-      if (!gamesMap.has(row.id)) {
-        gamesMap.set(row.id, {
-          ...row,
-          players: [],
-          winner: row.winner_id
-            ? {
-                id: row.winner_id,
-                username: row.winner_username,
-                email: row.winner_email,
-              }
-            : null,
-        });
-      }
-
-      if (row.player_id) {
-        gamesMap.get(row.id).players.push({
-          id: row.player_id,
-          username: row.player_username,
-          email: row.player_email,
-        });
-      }
-    });
-
-    return Array.from(gamesMap.values()).map((game) =>
-      GameMapper.toGameDTO(game, game.players, game.winner),
-    );
+    const gamesWithRelations = GameMapper.groupGameRows(rows);
+    return gamesWithRelations.map((game) => GameMapper.toGameDTO(game));
   };
 
   getUpcomingGames = async (): Promise<GameDTO[]> => {
-    const allGames = await this.getGames();
+    const allGames: GameDTO[] = await this.getGames();
 
     const todayMidnight = new Date();
     todayMidnight.setHours(0, 0, 0, 0);
@@ -55,17 +28,14 @@ export class GameService {
   };
 
   getGame = async (gameId: number): Promise<GameDTO> => {
-    const gameEntity: GameEntity | null =
-      await this.gameRepository.findById(gameId);
-    if (gameEntity) {
-      const game = GameMapper.toGameDTO(
-        gameEntity,
-        gameEntity.players,
-        gameEntity.winner,
-      );
-      return game;
-    } else {
+    const rows: GameWithRelationsRow[] =
+      await this.gameRepository.findByIdWithPlayersAndWinner(gameId);
+
+    if (rows.length === 0) {
       throw new Error('Game not found');
     }
+
+    const gamesWithRelations = GameMapper.groupGameRows(rows);
+    return GameMapper.toGameDTO(gamesWithRelations[0]);
   };
 }

@@ -12,8 +12,9 @@ const whitelist = [
   'http://localhost:8080',
   'http://localhost:4200',
   'https://ominous-enigma-vrwp6r79xjhw6r6-4200.app.github.dev',
+  'https://ominous-enigma-vrwp6r79xjhw6r6-8080.app.github.dev',
 ];
-var corsOptions = {
+const corsOptions = {
   origin: function (origin: any, callback: any) {
     // "!origin" to allow requests from rest tools
     if (whitelist.indexOf(origin) !== -1 || !origin) {

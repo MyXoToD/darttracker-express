@@ -1,7 +1,12 @@
 import dotenv from 'dotenv';
 import { Request } from 'express';
 import { comparePassword, hashPassword } from '../../utils/hash';
-import { generateAccessToken, generateRefreshToken, getExpirationDate } from '../../utils/jwt';
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  getExpirationDate,
+} from '../../utils/jwt';
+import { UserDTO } from '../users/models/userDTO.interface';
 import { UserEntity } from '../users/models/userEntity.interface';
 import { UserMapper } from '../users/user.mapper';
 import { UserRepository } from '../users/user.repository';
@@ -17,7 +22,7 @@ export class AuthService {
     private userRepository: UserRepository,
   ) {}
 
-  signup = async (signUpDTO: SignUpDTO): Promise<any> => {
+  signup = async (signUpDTO: SignUpDTO): Promise<UserDTO> => {
     const existing = await this.userRepository.findByEmail(signUpDTO.email);
     if (existing) {
       throw new Error('User with email already exists');
@@ -49,7 +54,10 @@ export class AuthService {
       refresh_token: refreshToken,
       ip_address: ipAddress,
       user_agent: userAgent,
-      expires_at: getExpirationDate(refreshToken, process.env.REFRESH_TOKEN_SECRET!),
+      expires_at: getExpirationDate(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET!,
+      ),
     } as Partial<SessionEntity>;
 
     this.authRepository.create(sessionEntity);
@@ -60,7 +68,10 @@ export class AuthService {
   refresh = async (refreshToken: string, req: Request) => {
     // Check if refreshtoken still valid
     // Check if user has active session with same refresh token
-    const session = await this.authRepository.findByRefreshTokenAndRefreshTokenNotExpired(refreshToken);
+    const session =
+      await this.authRepository.findByRefreshTokenAndRefreshTokenNotExpired(
+        refreshToken,
+      );
 
     if (!session) {
       throw new Error('Could not refresh session, no active session found');
@@ -71,11 +82,14 @@ export class AuthService {
     const ipAddress = req.headers['x-forwarded-for'] || req.ip;
     const userAgent = req.headers['user-agent'];
 
-    let updatedSessionEntity = {
+    const updatedSessionEntity = {
       refresh_token: newRefreshToken,
       ip_address: ipAddress,
       user_agent: userAgent,
-      expires_at: getExpirationDate(newRefreshToken, process.env.REFRESH_TOKEN_SECRET!),
+      expires_at: getExpirationDate(
+        newRefreshToken,
+        process.env.REFRESH_TOKEN_SECRET!,
+      ),
     } as Partial<SessionEntity>;
 
     // Update session in database with new refresh token and set updated at

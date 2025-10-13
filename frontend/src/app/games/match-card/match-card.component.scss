@@ -1,0 +1,105 @@
+.match-card {
+  border-radius: 1rem;
+  overflow: hidden;
+
+  &__header {
+    position: relative;
+    background-image: url(https://www.shutterstock.com/image-photo/new-classic-professional-sisal-dart-600nw-2286915663.jpg);
+    background-size: cover;
+    background-position: center;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 900;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    }
+
+    button {
+      padding: 1rem;
+      background-color: #4cd137;
+      border-radius: 5px;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      mask: linear-gradient(to right, black 50%, transparent);
+      backdrop-filter: blur(10px);
+    }
+  }
+
+  &__content {
+    padding: 2rem;
+    background-color: var(--c-dark);
+    border: 2px solid rgba(#fff, 0.05);
+    border-radius: 0 0 1rem 1rem;
+    border-top: 0;
+  }
+}
+
+.match-participants {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 2rem;
+  margin-top: 2rem;
+
+  .match-participant {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: rgba(#fff, 0.05);
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      scale: 1.1;
+      background-color: rgba(#fff, 0.1);
+    }
+
+    img {
+      border-radius: 50%;
+      width: 48px;
+      scale: 1.2;
+    }
+
+    &:nth-child(odd) {
+      flex-direction: row-reverse;
+    }
+  }
+}
+
+.tags {
+  display: flex;
+  gap: 0.5rem;
+
+  .tag {
+    background-color: rgba(#fff, 0.05);
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
+}
+
+.warning {
+  display: flex;
+  border: 2px solid rgba(yellow, 0.5);
+  background-color: rgba(yellow, 0.25);
+  border-radius: 5px;
+  padding: 1rem;
+  gap: 1rem;
+  margin-top: 2rem;
+
+  span {
+    vertical-align: middle;
+  }
+}

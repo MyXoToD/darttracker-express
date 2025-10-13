@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {
+  FaIconLibrary,
+  FontAwesomeModule,
+} from '@fortawesome/angular-fontawesome';
+import { faSliders, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { NavigationComponent } from './shared/navigation/navigation.component';
 import { NotificationsComponent } from './shared/notifications/notifications.component';
 import { TopbarComponent } from './shared/topbar/topbar.component';
@@ -17,4 +21,10 @@ import { TopbarComponent } from './shared/topbar/topbar.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {}
+export class AppComponent {
+  fontAwesomeLibrary = inject(FaIconLibrary);
+
+  constructor() {
+    this.fontAwesomeLibrary.addIcons(faSliders, faWarning);
+  }
+}

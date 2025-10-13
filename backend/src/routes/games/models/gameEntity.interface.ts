@@ -5,6 +5,7 @@ export interface GameEntity extends RowDataPacket {
   id: number;
   title: string;
   description: string;
+  played_at: Date;
   winner_id?: number;
   win_type?: WinType;
   created_at: Date;

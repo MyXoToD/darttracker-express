@@ -14,6 +14,8 @@ export class ErrorHandlerService implements ErrorHandler {
     console.log(error);
     console.error(error.stack);
     console.log('HANDLE ERROR', error.message);
-    this._notificationsService.addErrorNotification(error.error);
+    this._notificationsService.addErrorNotification(
+      error.error ?? error.message ?? 'An unknown error occurred',
+    );
   }
 }

@@ -11,7 +11,7 @@
       <li>
         <a routerLink="users">Players</a>
         <a routerLink="games">Games</a>
-        <a routerLink="">Statistics</a>
+        <a routerLink="statistics">Statistics</a>
       </li>
     } @else {
       <li class="navigation__headline">Welcome</li>
@@ -24,7 +24,7 @@
 
   <ul *ngIf="isLoggedIn()" class="navigation__bottom">
     <li>
-      <a href="/settings"> <fa-icon icon="sliders" />Settings</a>
+      <a routerLink="settings"> <fa-icon icon="sliders" />Settings</a>
       <a (click)="logout()">Logout</a>
     </li>
   </ul>

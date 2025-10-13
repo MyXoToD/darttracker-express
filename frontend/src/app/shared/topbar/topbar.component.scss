@@ -38,3 +38,52 @@
     }
   }
 }
+
+.profile-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+
+  &:hover .profile-menu__links {
+    display: flex;
+  }
+
+  span {
+    font-weight: 500;
+  }
+
+  img {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+  }
+
+  &__links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--c-elevation-1);
+    flex-direction: column;
+    min-width: 150px;
+    box-shadow: var(--shadow-md);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+
+    a {
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      color: var(--c-text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      &:hover {
+        background-color: var(--c-elevation-2);
+      }
+    }
+  }
+}

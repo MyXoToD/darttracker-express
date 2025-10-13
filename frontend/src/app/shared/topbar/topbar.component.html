@@ -3,8 +3,14 @@
   <div class="topbar__right">
     <div>Theme Toggle Icon</div>
 
-    <!-- <fa-icon icon="coffee"></fa-icon> -->
+    <div class="profile-menu">
+      <span>USERNAME</span>
+      <img src="//placehold.co/64x64" alt="" />
 
-    <img src="//placehold.co/64x64" alt="" />
+      <div class="profile-menu__links">
+        <a routerLink="settings"> <fa-icon icon="sliders" /> Settings </a>
+        <a (click)="logout()"> <fa-icon icon="logout" /> Logout </a>
+      </div>
+    </div>
   </div>
 </div>

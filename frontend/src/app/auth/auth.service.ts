@@ -26,7 +26,7 @@ export class AuthService {
           if (token) {
             localStorage.setItem('accessToken', token);
             this.isLoggedIn = true;
-            this.router.navigate(['/users']);
+            this.router.navigate(['/dashboard']);
             this._notificationsService.addSuccessNotification(
               'You have logged in successfully.',
             );

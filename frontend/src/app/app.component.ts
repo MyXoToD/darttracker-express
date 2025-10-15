@@ -5,27 +5,30 @@ import {
   FontAwesomeModule,
 } from '@fortawesome/angular-fontawesome';
 import {
-  faAngleRight, faBars,
-  faCaretRight, faChartSimple,
+  faAngleRight,
+  faBars,
+  faChartSimple,
   faDice,
   faHome,
+  faMoon,
   faPeopleGroup,
+  faPlusCircle,
   faRightFromBracket,
-  faSliders, faTrophy,
+  faSliders,
+  faSun,
+  faTrophy,
   faUser,
   faWarning,
 } from '@fortawesome/free-solid-svg-icons';
-import { NavigationComponent } from './shared/navigation/navigation.component';
 import { NotificationsComponent } from './shared/notifications/notifications.component';
-import { TopbarComponent } from './shared/topbar/topbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { TopbarComponent } from './shared/topbar/topbar.component';
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
     NotificationsComponent,
-    NavigationComponent,
     TopbarComponent,
     FontAwesomeModule,
     SidebarComponent,
@@ -38,6 +41,21 @@ export class AppComponent {
   fontAwesomeLibrary = inject(FaIconLibrary);
 
   constructor() {
-    this.fontAwesomeLibrary.addIcons(faSliders, faWarning, faRightFromBracket, faHome, faUser, faPeopleGroup, faDice, faAngleRight, faTrophy, faChartSimple, faBars);
+    this.fontAwesomeLibrary.addIcons(
+      faSliders,
+      faWarning,
+      faRightFromBracket,
+      faHome,
+      faUser,
+      faPeopleGroup,
+      faDice,
+      faAngleRight,
+      faTrophy,
+      faChartSimple,
+      faBars,
+      faPlusCircle,
+      faSun,
+      faMoon,
+    );
   }
 }

@@ -11,6 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    overflow: hidden;
 
     > * {
       position: relative;
@@ -24,28 +25,29 @@
     }
 
     button {
-      padding: .5rem 1rem;
+      padding: 0.5rem 1rem;
       border: 2px solid #fff;
-      background-color: rgba(#fff, .5);
+      background-color: rgba(#000, 0.5);
       border-radius: 5px;
       cursor: pointer;
       font-weight: 600;
       text-transform: uppercase;
+      color: #fff;
     }
 
     &:before {
       content: '';
       position: absolute;
       inset: 0;
-      mask: linear-gradient(to right, black 50%, transparent);
+      mask-image: linear-gradient(to right, black 50%, transparent);
       backdrop-filter: blur(10px);
     }
   }
 
   &__content {
     padding: 2rem;
-    background-color: var(--c-dark);
-    border: 2px solid rgba(#fff, 0.05);
+    // background-color: var(--c-dark);
+    border: 2px solid var(--c-elevation-1);
     border-radius: 0 0 1rem 1rem;
     border-top: 0;
   }
@@ -61,7 +63,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    background-color: rgba(#fff, 0.05);
+    background-color: var(--c-elevation-1);
     border-radius: 1rem;
     cursor: pointer;
     transition: all 0.3s ease-in-out;

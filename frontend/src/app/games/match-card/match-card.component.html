@@ -2,7 +2,7 @@
   <div class="match-card">
     <div class="match-card__header">
       <h2>{{ game.title }}, 13.10.2025</h2>
-      <button>Join</button>
+      <button><fa-icon icon="plus-circle" /> Join</button>
     </div>
     <div class="match-card__content">
       <div class="tags">
@@ -24,9 +24,12 @@
       <div class="match-participants">
         @for (player of game.players; track player) {
           <div class="match-participant" [routerLink]="['/users', player.id]">
-            <img ngSrc="//placehold.co/48x48" alt="{{ player.username }}" width="48" height="48" /><span>{{
-              player.username
-            }}</span>
+            <img
+              ngSrc="//placehold.co/48x48"
+              alt="{{ player.username }}"
+              width="48"
+              height="48"
+            /><span>{{ player.username }}</span>
           </div>
         }
       </div>

@@ -1,7 +1,21 @@
 <div class="topbar">
   <div class="topbar__left">{{ pageTitle() }}</div>
   <div class="topbar__right">
-    <div>Theme Toggle Icon</div>
+    <div class="theme-toggle">
+      <label for="theme-toggle">
+        <fa-icon icon="sun" />
+      </label>
+      <input
+        type="checkbox"
+        id="theme-toggle"
+        #themeToggle
+        (change)="toggleTheme()"
+      />
+      <label for="theme-toggle"></label>
+      <label for="theme-toggle">
+        <fa-icon icon="moon" />
+      </label>
+    </div>
 
     @if (isLoggedIn()) {
       <div class="profile-menu">
@@ -10,7 +24,9 @@
 
         <div class="profile-menu__links">
           <a routerLink="settings"> <fa-icon icon="sliders" /> Settings </a>
-          <a (click)="logout()"> <fa-icon icon="right-from-bracket" /> Logout </a>
+          <a (click)="logout()">
+            <fa-icon icon="right-from-bracket" /> Logout
+          </a>
         </div>
       </div>
     } @else {

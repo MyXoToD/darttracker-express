@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -8,7 +7,7 @@ import { AuthService } from '../../auth/auth.service';
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
-  imports: [RouterLink, NgIf, FaIconComponent, RouterLinkActive],
+  imports: [RouterLink, FaIconComponent, RouterLinkActive],
   standalone: true,
 })
 export class NavigationComponent {

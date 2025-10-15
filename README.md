@@ -18,4 +18,13 @@
 
 ## Setup
 
-docker compose up --build -d
+- docker compose up --build -d
+
+## Todos
+
+- [ ] Fix topbar page title on navigation error (disappears)
+- [ ] Add theme toggle
+- [ ] Add collapse possibility for sidebar
+- [ ] Change form looks
+- [ ] Change datatables
+- [ ] Add topbar profile menu

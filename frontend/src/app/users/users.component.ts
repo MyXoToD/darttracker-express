@@ -6,6 +6,7 @@ import { UsersService } from './users.service';
 @Component({
   selector: 'app-users',
   imports: [RouterLink],
+  standalone: true,
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })

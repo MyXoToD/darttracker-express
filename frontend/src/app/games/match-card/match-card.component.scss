@@ -24,9 +24,13 @@
     }
 
     button {
-      padding: 1rem;
-      background-color: #4cd137;
+      padding: .5rem 1rem;
+      border: 2px solid #fff;
+      background-color: rgba(#fff, .5);
       border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      text-transform: uppercase;
     }
 
     &:before {

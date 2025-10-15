@@ -62,7 +62,9 @@ export class AuthService {
 
     this.authRepository.create(sessionEntity);
 
-    return { accessToken, refreshToken };
+    const userDTO: UserDTO = UserMapper.toDTO(user);
+
+    return { user: userDTO, accessToken, refreshToken };
   };
 
   refresh = async (refreshToken: string, req: Request) => {

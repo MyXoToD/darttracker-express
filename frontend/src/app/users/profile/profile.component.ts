@@ -5,7 +5,7 @@ import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-profile',
-  imports: [],
+  standalone: true,
   templateUrl: './profile.component.html',
 })
 export class ProfileComponent {

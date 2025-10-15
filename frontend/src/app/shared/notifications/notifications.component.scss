@@ -9,6 +9,11 @@
   .notification {
     padding: 1rem;
     border-radius: 0.5rem;
+    animation-name: fadeOut;
+    animation-delay: 4500ms;
+    animation-duration: 500ms;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
 
     &--success {
       background-color: hsla(125, 100%, 71%, 0.712);
@@ -25,5 +30,11 @@
     &--error {
       background-color: hsla(0, 100%, 71%, 0.712);
     }
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
   }
 }

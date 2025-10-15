@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { filter, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

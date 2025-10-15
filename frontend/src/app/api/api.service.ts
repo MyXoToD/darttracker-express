@@ -9,7 +9,7 @@ export class ApiService<T = any> {
   //   'https://ominous-enigma-vrwp6r79xjhw6r6-3000.app.github.dev/api';
 
   get<T>(endpoint: string) {
-    return this.http.get(this.apiUrl + endpoint, { withCredentials: true });
+    return this.http.get<T>(this.apiUrl + endpoint, { withCredentials: true });
   }
 
   post<T>(endpoint: string, data: any = {}) {

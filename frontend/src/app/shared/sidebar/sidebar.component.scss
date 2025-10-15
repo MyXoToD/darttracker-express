@@ -1,0 +1,25 @@
+.sidebar {
+  grid-area: sidebar;
+  background-color: var(--c-elevation-1);
+  display: grid;
+  grid-template-rows: var(--topbarHeight) calc(100vh - var(--topbarHeight));
+  grid-template-areas:
+    'sidebarTop'
+    'sidebarBottom';
+
+  &__top {
+    grid-area: sidebarTop;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+
+    h1 {
+      font-size: 1.125rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      grid-area: sidebarTop;
+    }
+  }
+}

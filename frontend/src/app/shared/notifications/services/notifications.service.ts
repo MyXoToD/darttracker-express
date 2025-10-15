@@ -34,12 +34,12 @@ export class NotificationsService {
 
   constructor() {
     // Reset notifications on router navigation
-    this._router.events
-      .pipe(
-        filter((event) => event instanceof NavigationStart),
-        tap(() => this.clearAll()),
-      )
-      .subscribe();
+    // this._router.events
+    //   .pipe(
+    //     filter((event) => event instanceof NavigationStart),
+    //     tap(() => this.clearAll()),
+    //   )
+    //   .subscribe();
   }
 
   addNotification(

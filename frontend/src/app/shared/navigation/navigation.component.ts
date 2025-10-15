@@ -1,6 +1,6 @@
 import { NgIf } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, computed, inject } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { AuthService } from '../../auth/auth.service';
 
@@ -8,15 +8,14 @@ import { AuthService } from '../../auth/auth.service';
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
-  imports: [RouterLink, NgIf, FaIconComponent],
+  imports: [RouterLink, NgIf, FaIconComponent, RouterLinkActive],
   standalone: true,
 })
 export class NavigationComponent {
   private readonly authService = inject(AuthService);
 
-  isLoggedIn() {
-    return this.authService.isLoggedIn;
-  }
+  isLoggedIn = computed(() => this.authService.isLoggedIn());
+  activeLinkClass = 'navigation__link--active';
 
   logout() {
     this.authService.logout().subscribe();

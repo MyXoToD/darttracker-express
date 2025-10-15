@@ -19,16 +19,16 @@ export class AuthController {
   login = async (req: Request, res: Response) => {
     try {
       const loginDTO: LoginDTO = req.body;
-      const tokens = await this.authService.login(loginDTO, req);
+      const response = await this.authService.login(loginDTO, req);
 
-      res.cookie('refreshToken', tokens.refreshToken, {
+      res.cookie('refreshToken', response.refreshToken, {
         httpOnly: true,
         secure: false, // set to true if using HTTPS (TODO)
         sameSite: 'strict', // prevent CSRF attacks
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days TODO: Same as refresh token expiration
       });
 
-      res.status(200).send({ token: tokens.accessToken });
+      res.status(200).send({ user: response.user, token: response.accessToken });
     } catch (error: any) {
       res.status(401).send({ error: error.message });
     }

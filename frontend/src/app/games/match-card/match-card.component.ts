@@ -5,11 +5,12 @@ import { tap } from 'rxjs';
 import { UserDTO } from '../../users/models/userDTO.interface';
 import { GamesService } from '../games.service';
 import { GamesWithPlayers } from '../models/gamesWithPlayers.interface';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-match-card',
   standalone: true,
-  imports: [FaIconComponent, RouterLink],
+  imports: [FaIconComponent, RouterLink, NgOptimizedImage],
   templateUrl: './match-card.component.html',
   styleUrls: ['./match-card.component.scss'],
 })

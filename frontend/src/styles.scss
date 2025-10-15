@@ -3,6 +3,7 @@
 :root {
   --c-elevation-0: #161420;
   --c-elevation-1: #ffffff0d;
+  --c-accent: skyblue;
   --topbarHeight: 60px;
 }
 
@@ -29,6 +30,10 @@ select {
 a {
   transition: all 0.3s ease;
   text-decoration: none;
+
+  * {
+    transition: all .4s ease;
+  }
 }
 
 app-root {
@@ -39,25 +44,6 @@ app-root {
   grid-template-columns: calc((2 * 1.5rem) + 240px) auto;
   grid-template-areas: 'sidebar main';
   height: 100vh;
-}
-
-.sidebar {
-  grid-area: sidebar;
-  background-color: var(--c-elevation-1);
-  display: grid;
-  grid-template-rows: var(--topbarHeight) calc(100vh - var(--topbarHeight));
-  grid-template-areas:
-    'sidebarTop'
-    'sidebarBottom';
-
-  h1 {
-    padding: 0 1rem;
-    font-size: 1.125rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    grid-area: sidebarTop;
-  }
 }
 
 .main {
@@ -147,7 +133,7 @@ app-root {
       &:nth-child(odd) td {
         background-color: var(--c-elevation-1);
       }
-      &:even {
+      &:nth-child(even) td {
         background-color: var(--c-elevation-0);
       }
     }

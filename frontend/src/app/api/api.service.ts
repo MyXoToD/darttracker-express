@@ -17,4 +17,10 @@ export class ApiService<T = any> {
       withCredentials: true,
     });
   }
+
+  patch<T>(endpoint: string, data: any = {}) {
+    return this.http.patch(this.apiUrl + endpoint, data, {
+      withCredentials: true,
+    });
+  }
 }

@@ -28,7 +28,7 @@ export class AuthController {
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days TODO: Same as refresh token expiration
       });
 
-      res.status(200).send({ user: response.user, token: response.accessToken });
+      res.status(200).send({ token: response.accessToken });
     } catch (error: any) {
       res.status(401).send({ error: error.message });
     }

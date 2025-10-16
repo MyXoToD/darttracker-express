@@ -1,26 +1,12 @@
 <div class="topbar">
   <div class="topbar__left">{{ pageTitle() }}</div>
   <div class="topbar__right">
-    <div class="theme-toggle">
-      <label for="theme-toggle">
-        <fa-icon icon="sun" />
-      </label>
-      <input
-        type="checkbox"
-        id="theme-toggle"
-        #themeToggle
-        (change)="toggleTheme()"
-      />
-      <label for="theme-toggle"></label>
-      <label for="theme-toggle">
-        <fa-icon icon="moon" />
-      </label>
-    </div>
+    <app-theme-toggle></app-theme-toggle>
 
     @if (isLoggedIn()) {
       <div class="profile-menu">
         <span>{{ loggedInUser()?.username }}</span>
-        <img ngSrc="//placehold.co/64x64" alt="" width="32" height="32" />
+        <img ngSrc="//placehold.co/64x64" alt="" width="48" height="48" />
 
         <div class="profile-menu__links">
           <a routerLink="settings"> <fa-icon icon="sliders" /> Settings </a>

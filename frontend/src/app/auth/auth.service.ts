@@ -1,11 +1,11 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { tap } from 'rxjs';
+import { catchError, EMPTY, tap } from 'rxjs';
 import { ApiService } from '../api/api.service';
 import { NotificationsService } from '../shared/notifications/services/notifications.service';
-import { UserDTO } from '../users/models/userDTO.interface';
 import { UsersService } from '../users/users.service';
+import { LoggedInUser } from './models/loggedInUser.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,7 +15,7 @@ export class AuthService {
   private readonly _userService = inject(UsersService);
 
   isLoggedIn = signal<boolean>(false);
-  loggedInUser = signal<UserDTO | null>(null);
+  loggedInUser = signal<LoggedInUser | null>(null);
 
   signup(signupData: any) {
     return this.apiService.post('/auth/signup', signupData);
@@ -26,11 +26,12 @@ export class AuthService {
       .post<{ token: string }>('/auth/login', loginData)
       .pipe(
         tap((result) => {
-          const { user, token } = result as { user: UserDTO, token: string };
+          const { token } = result as { token: string };
           if (token) {
             localStorage.setItem('accessToken', token);
             this.isLoggedIn.set(true);
-            this.loggedInUser.set(user);
+            const { id, username }: LoggedInUser = jwtDecode(token);
+            this.loggedInUser.set({ id, username });
             this.router.navigate(['/dashboard']);
             this._notificationsService.addSuccessNotification(
               'You have logged in successfully.',
@@ -47,7 +48,23 @@ export class AuthService {
         if (token) {
           localStorage.setItem('accessToken', token);
           this.isLoggedIn.set(true);
+          const { id, username }: LoggedInUser = jwtDecode(token);
+          this.loggedInUser.set({ id, username });
         }
+      }),
+      catchError((error: any) => {
+        console.log(error);
+        // Remove possible accessToken from localStorage and set logged out when refresh fails
+        localStorage.removeItem('accessToken');
+        this.isLoggedIn.set(false);
+        this.loggedInUser.set(null);
+        this._notificationsService.addErrorNotification(
+          'You need to be logged in.',
+        );
+        this.router.navigate(['auth', 'login']);
+        return EMPTY;
+        // this.isLoggedIn.set(false);
+        // return of(null);
       }),
     );
   }
@@ -75,11 +92,8 @@ export class AuthService {
       const decoded: any = jwtDecode(token);
       if (decoded.exp && Date.now() < decoded.exp * 1000) {
         this.isLoggedIn.set(true);
-        this._userService.getById(decoded.id).pipe(
-          tap((user: UserDTO) => {
-            this.loggedInUser.set(user);
-          })
-        ).subscribe();
+        const { id, username }: LoggedInUser = decoded;
+        this.loggedInUser.set({ id, username });
         return true;
       }
 

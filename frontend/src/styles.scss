@@ -2,8 +2,11 @@
 
 :root {
   --c-elevation-0: #161420;
-  --c-elevation-1: #ffffff0d;
-  --c-accent: skyblue;
+  --c-elevation-1: rgba(255, 255, 255, 0.05);
+  --c-elevation-1-flat: #22202b;
+  --c-elevation-2: rgba(255, 255, 255, 0.1);
+  --c-text: #ccc;
+  --c-accent: #27ae60;
   --topbarHeight: 60px;
   --tf-cubic: cubic-bezier(0.66, 0, 0.34, 1);
   --tf-spring: linear(
@@ -30,9 +33,14 @@
   --theme-dur: 1s;
 }
 
-.dark {
-  --c-elevation-0: #ffffff;
-  --c-elevation-1: rgba(0, 0, 0, 0.05);
+.light {
+  --c-elevation-0: #fcf9e9;
+  --c-elevation-1: hsl(40, 75%, 85%);
+  --c-elevation-1-flat: hsl(40, 75%, 85%);
+  --c-elevation-2: rgba(0, 0, 0, 0.1);
+  --c-elevation-2: hsl(40, 75%, 95%);
+  --c-text: #222;
+  --c-accent: #ff9292;
 }
 
 ::view-transition-old(root) {
@@ -82,7 +90,7 @@ a {
 
 app-root {
   background-color: var(--c-elevation-0);
-  color: #ccc;
+  color: var(--c-text);
   font-family: 'Rubik', sans-serif;
   display: grid;
   grid-template-columns: calc((2 * 1.5rem) + 240px) auto;
@@ -153,8 +161,8 @@ app-root {
 .datatable {
   width: 100%;
   border-collapse: collapse;
-  box-shadow: 0 0 1rem var(--c-elevation-1);
-  border-radius: 1rem;
+  // box-shadow: 0 0 1rem var(--c-elevation-1);
+  border-radius: 1rem 1rem 0 0;
   overflow: hidden;
 
   td,
@@ -168,12 +176,23 @@ app-root {
       // font-size: 0.75rem;
       text-transform: uppercase;
       font-weight: 600;
-      background-color: #6a6099;
+      background-color: var(--c-accent);
     }
   }
 
   tbody {
     tr {
+      td {
+        &:first-child {
+          border-left: 2px solid var(--c-elevation-1);
+        }
+        &:last-child {
+          border-right: 2px solid var(--c-elevation-1);
+        }
+      }
+      &:last-child td {
+        border-bottom: 2px solid var(--c-elevation-1);
+      }
       &:nth-child(odd) td {
         background-color: var(--c-elevation-1);
       }

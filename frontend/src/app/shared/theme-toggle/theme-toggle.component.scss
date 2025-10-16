@@ -1,0 +1,72 @@
+.theme-toggle {
+  display: grid;
+  grid-template-columns: max-content auto max-content;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.8;
+  transition:
+    scale 0.2s var(--tf-cubic),
+    opacity 0.2s var(--tf-cubic);
+
+  label {
+    cursor: pointer;
+  }
+
+  input {
+    appearance: none;
+    display: none;
+
+    &:active + label:before {
+      // aspect-ratio: 1.2 / 1;
+      scale: 1.15 1;
+    }
+
+    &:checked + label:before {
+      right: calc(100% - 4px - (1.5rem - 8px));
+      background-color: yellow;
+    }
+
+    & + label {
+      position: relative;
+      width: 3rem;
+      height: 1.5rem;
+      border-radius: 100px;
+      background-color: rgba(#000, 0.5);
+      transition: all 0.2s ease-in-out;
+
+      &:before {
+        content: '';
+        position: absolute;
+        height: calc(100% - 8px);
+        aspect-ratio: 1 / 1;
+        background-color: lightskyblue;
+        top: 4px;
+        right: 4px;
+        border-radius: 50%;
+        transition:
+          right 0.2s var(--tf-spring),
+          color 0.2s ease-in-out;
+      }
+    }
+  }
+
+  &:hover {
+    scale: 1.2;
+    opacity: 1;
+  }
+
+  &:active,
+  &:focus {
+    scale: 1.1;
+
+    input {
+      & + label {
+        background-color: rgba(#000, 0.3);
+
+        &:before {
+          background-color: #fff;
+        }
+      }
+    }
+  }
+}

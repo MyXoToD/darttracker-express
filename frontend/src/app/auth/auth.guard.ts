@@ -10,7 +10,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (authService.isAuthenticated()) {
     return true;
   }
-
   // Only trigger refresh if accessToken is present
   const accessToken = localStorage.getItem('accessToken');
   if (!accessToken || (accessToken && accessToken.split('.').length !== 3)) {

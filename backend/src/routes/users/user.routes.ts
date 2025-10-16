@@ -11,5 +11,6 @@ const userController = new UserController(userService);
 
 usersRouter.get('/', userController.getUsers);
 usersRouter.get('/:id', userController.getUser);
+usersRouter.patch('/:id/theme', userController.updateTheme);
 
 export default usersRouter;

@@ -25,4 +25,16 @@ export class UserService {
       throw new CustomError(`Could not find user with id '${userId}'.`, 404);
     }
   };
+
+  updateTheme = async (
+    userId: number,
+    theme: 'light' | 'dark' | 'system',
+  ): Promise<void> => {
+    const userEntity: UserEntity | null =
+      await this.userRepository.findById(userId);
+    if (!userEntity) {
+      throw new CustomError(`Could not find user with id '${userId}'.`, 404);
+    }
+    await this.userRepository.update(userId, { theme } as Partial<UserEntity>);
+  };
 }

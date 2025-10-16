@@ -5,6 +5,7 @@ export interface UserEntity extends RowDataPacket {
   username: string;
   password: string;
   email: string;
+  theme: 'light' | 'dark' | 'system';
   created_at: Date;
   updated_at: Date;
 }

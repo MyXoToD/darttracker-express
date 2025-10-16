@@ -45,7 +45,7 @@
         display: block;
         cursor: pointer;
         padding: 0.5rem;
-        color: #fff;
+        color: var(--c-text);
         border-radius: 3px;
 
         fa-icon {
@@ -53,11 +53,12 @@
           vertical-align: middle;
           display: inline-block;
           margin-right: 1rem;
-          opacity: .5;
+          opacity: 0.5;
         }
 
-        &:hover, &.navigation__link--active {
-          background-color: rgba(#fff, 0.1);
+        &:hover,
+        &.navigation__link--active {
+          background-color: var(--c-elevation-2);
 
           fa-icon {
             opacity: 1;

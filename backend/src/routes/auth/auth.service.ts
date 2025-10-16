@@ -44,7 +44,10 @@ export class AuthService {
       throw new Error('Invalid credentials');
     }
 
-    const accessToken = generateAccessToken({ id: user.id });
+    const accessToken = generateAccessToken({
+      id: user.id,
+      username: user.username,
+    });
     const refreshToken = generateRefreshToken({ id: user.id });
     const ipAddress = req.headers['x-forwarded-for'] || req.ip;
     const userAgent = req.headers['user-agent'];
@@ -62,9 +65,7 @@ export class AuthService {
 
     this.authRepository.create(sessionEntity);
 
-    const userDTO: UserDTO = UserMapper.toDTO(user);
-
-    return { user: userDTO, accessToken, refreshToken };
+    return { accessToken, refreshToken };
   };
 
   refresh = async (refreshToken: string, req: Request) => {

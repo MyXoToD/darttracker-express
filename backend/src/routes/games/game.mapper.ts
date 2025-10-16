@@ -24,8 +24,8 @@ export interface GameWithRelationsRow extends RowDataPacket {
 }
 
 export interface GameWithRelations extends GameEntity {
-  winner: UserDTO | null;
-  players: UserDTO[];
+  winner: Partial<UserDTO> | null;
+  players: Partial<UserDTO>[];
 }
 
 export class GameMapper {
@@ -49,13 +49,10 @@ export class GameMapper {
     for (const row of rows) {
       if (!gamesMap.has(row.id)) {
         // Erstelle das Game-Objekt mit Winner
-        const winner: UserDTO | null = row.winner_id
+        const winner: Partial<UserDTO> | null = row.winner_id
           ? {
               id: row.winner_id,
               username: row.winner_username!,
-              email: row.winner_email!,
-              created_at: row.winner_created_at!,
-              updated_at: row.winner_updated_at!,
             }
           : null;
 

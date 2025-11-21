@@ -1,32 +1,48 @@
 services:
   database:
     image: mysql:latest
-    container_name: mysql_container
+    container_name: darttracker_database
     env_file: ./.env
     environment:
       - TZ=Europe/Berlin
     ports:
       - ${MYSQL_PORT}:${MYSQL_PORT}
     volumes:
-      - ./config/schema.sql:/docker-entrypoint-initdb.d/schema.sql
       - mysql_data:/var/lib/mysql
+    networks:
+      - darttracker_network
+  flyway:
+    image: flyway/flyway:latest
+    container_name: darttracker_migrations
+    depends_on:
+      - database
+    command:
+      [
+        'migrate',
+        '-url=jdbc:mysql://database:3306/${MYSQL_DATABASE}',
+        '-user=${MYSQL_USER}',
+        '-password=${MYSQL_PASSWORD}',
+        '-connectRetries=10',
+      ]
+    volumes:
+      - ./migrations:/flyway/sql
     networks:
       - darttracker_network
   backend:
     build: ./backend
-    container_name: backend_container
+    container_name: darttracker_backend
     depends_on:
       - database
     env_file: ./backend/.env
     environment:
-      DB_HOST: mysql_container
+      DB_HOST: darttracker_database
     ports:
       - ${BACKEND_PORT}:${BACKEND_PORT}
     networks:
       - darttracker_network
   frontend:
     build: ./frontend
-    container_name: frontend_container
+    container_name: darttracker_frontend
     depends_on:
       - backend
     ports:
